@@ -1,0 +1,275 @@
+{% extends 'base.html' %}
+
+{% block title %}Tools & Software - GeoSpatial Expert{% endblock %}
+
+{% block main_class %}tools-page{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="fw-bold">Tools & Software</h1>
+                <p class="lead">Custom tools and software developed for geospatial analysis and forest management</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tools Grid Section -->
+<section class="tools-grid py-5">
+    <div class="container">
+        <div class="row">
+            {% for tool in tools %}
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
+                <div class="card h-100 tool-card">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ tool.image }}" class="img-fluid rounded-start tool-image" alt="{{ tool.name }}">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title h4">{{ tool.name }}</h3>
+                                <p class="card-text">{{ tool.description }}</p>
+                                
+                                <div class="tool-features mb-3">
+                                    <h4 class="h6">Key Features:</h4>
+                                    <ul class="list-unstyled">
+                                        {% for feature in tool.features %}
+                                        <li><i class="fas fa-check-circle text-success me-2"></i> {{ feature }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                
+                                <div class="tool-tech mb-3">
+                                    <h4 class="h6">Technologies:</h4>
+                                    <div>
+                                        {% for tech in tool.technologies %}
+                                        <span class="badge bg-secondary me-1 mb-1">{{ tech }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                
+                                <a href="{{ tool.github }}" target="_blank" class="btn btn-sm btn-primary me-2">
+                                    <i class="fab fa-github me-2"></i> GitHub
+                                </a>
+                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#toolModal{{ tool.id }}">
+                                    <i class="fas fa-info-circle me-2"></i> Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tool Details Modal -->
+            <div class="modal fade" id="toolModal{{ tool.id }}" tabindex="-1" aria-labelledby="toolModalLabel{{ tool.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="toolModalLabel{{ tool.id }}">{{ tool.name }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row mb-4">
+                                <div class="col-md-8">
+                                    <h4 class="h5 mb-3">Description</h4>
+                                    <p>{{ tool.description }}</p>
+                                    
+                                    <h4 class="h5 mb-3">Key Features</h4>
+                                    <ul>
+                                        {% for feature in tool.features %}
+                                        <li>{{ feature }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    
+                                    <h4 class="h5 mb-3">Technologies</h4>
+                                    <div class="mb-3">
+                                        {% for tech in tool.technologies %}
+                                        <span class="badge bg-secondary me-1 mb-1">{{ tech }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <img src="{{ tool.image }}" class="img-fluid rounded" alt="{{ tool.name }}">
+                                </div>
+                            </div>
+                            
+                            <h4 class="h5 mb-3">User Guide</h4>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="h6">Installation</h5>
+                                    <pre><code class="language-bash">
+# Clone the repository
+git clone {{ tool.github }}.git
+
+# Navigate to project directory
+cd {{ tool.name | replace(" ", "-") | lower }}
+
+# Install dependencies
+pip install -r requirements.txt
+                                    </code></pre>
+                                    
+                                    <h5 class="h6 mt-3">Basic Usage</h5>
+                                    <pre><code class="language-python">
+import {{ tool.name | replace(" ", "") | lower }}
+
+# Initialize the tool
+tool = {{ tool.name | replace(" ", "") | lower }}.Tool()
+
+# Process data
+results = tool.process('input_data.tif')
+
+# Save results
+tool.save_results(results, 'output_data.tif')
+                                    </code></pre>
+                                    
+                                    <p class="mt-3 mb-0">For detailed documentation and examples, please refer to the <a href="{{ tool.github }}" target="_blank">GitHub repository</a>.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{ tool.github }}" target="_blank" class="btn btn-primary">
+                                <i class="fab fa-github me-2"></i> View on GitHub
+                            </a>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Open Source Contribution Section -->
+<section class="open-source py-5 bg-light">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-heading" data-aos="fade-up">Open Source Contributions</h2>
+                <p class="text-muted" data-aos="fade-up" data-aos-delay="100">Projects and libraries I've contributed to in the geospatial community</p>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <h3 class="card-title h5">GeoPandas</h3>
+                        <p class="card-text">Contributed bug fixes and documentation improvements to GeoPandas, a Python library for geospatial data analysis.</p>
+                        <a href="https://github.com/geopandas/geopandas" target="_blank" class="btn btn-sm btn-outline-primary">View Project</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h3 class="card-title h5">QGIS Processing Algorithms</h3>
+                        <p class="card-text">Developed custom processing algorithms for QGIS focused on forest analysis and remote sensing workflows.</p>
+                        <a href="https://github.com/qgis/QGIS" target="_blank" class="btn btn-sm btn-outline-primary">View Project</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-satellite"></i>
+                        </div>
+                        <h3 class="card-title h5">Earth Engine Community Dataset</h3>
+                        <p class="card-text">Contributed forest health and biomass datasets to the Google Earth Engine Community Data Catalog.</p>
+                        <a href="https://github.com/google/earthengine-community" target="_blank" class="btn btn-sm btn-outline-primary">View Project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Custom Development CTA -->
+<section class="custom-dev-cta py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="card bg-primary text-white">
+                    <div class="card-body p-5 text-center">
+                        <h2 class="card-title mb-4" data-aos="fade-up">Need Custom Geospatial Tools?</h2>
+                        <p class="card-text mb-4 lead" data-aos="fade-up" data-aos-delay="100">
+                            I develop custom geospatial solutions tailored to your specific environmental monitoring and forest management needs.
+                        </p>
+                        <div data-aos="fade-up" data-aos-delay="200">
+                            <a href="{{ url_for('contact') }}" class="btn btn-light btn-lg">
+                                <i class="fas fa-envelope me-2"></i> Discuss Your Project
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tutorial and Resources Section -->
+<section class="resources py-5 bg-light">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-heading" data-aos="fade-up">Tutorials & Resources</h2>
+                <p class="text-muted" data-aos="fade-up" data-aos-delay="100">Helpful guides and resources for using geospatial tools</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4" data-aos="fade-up">
+                <div class="card resource-card">
+                    <div class="card-body">
+                        <h3 class="card-title h5"><i class="fas fa-book me-2 text-primary"></i> Getting Started with Python for GIS</h3>
+                        <p class="card-text">A comprehensive guide to setting up Python for geospatial analysis and basic GIS operations.</p>
+                        <a href="{{ url_for('blog_post', post_id=2) }}" class="btn btn-sm btn-outline-primary">Read Tutorial</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card resource-card">
+                    <div class="card-body">
+                        <h3 class="card-title h5"><i class="fas fa-video me-2 text-primary"></i> Google Earth Engine Workshop</h3>
+                        <p class="card-text">Video tutorials and resources from my workshop on using Google Earth Engine for forest monitoring.</p>
+                        <a href="#" class="btn btn-sm btn-outline-primary">Watch Videos</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card resource-card">
+                    <div class="card-body">
+                        <h3 class="card-title h5"><i class="fas fa-file-code me-2 text-primary"></i> QGIS Plugin Development Guide</h3>
+                        <p class="card-text">Step-by-step instructions for creating your own QGIS plugins using Python and PyQGIS.</p>
+                        <a href="#" class="btn btn-sm btn-outline-primary">View Guide</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card resource-card">
+                    <div class="card-body">
+                        <h3 class="card-title h5"><i class="fas fa-download me-2 text-primary"></i> Python Code Snippets</h3>
+                        <p class="card-text">A collection of useful Python code snippets for common geospatial analysis tasks.</p>
+                        <a href="#" class="btn btn-sm btn-outline-primary">Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

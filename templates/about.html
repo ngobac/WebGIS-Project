@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+
+{% block title %}About - GeoSpatial Expert{% endblock %}
+
+{% block main_class %}about-page{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="fw-bold">About Me</h1>
+                <p class="lead">GIS Specialist & Forest Resource Management Expert</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Biography Section -->
+<section class="biography py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-5 mb-4" data-aos="fade-right">
+                <div class="profile-image-container">
+                    <img src="{{ url_for('static', filename='img/profile.jpg') }}" alt="Profile Image" class="img-fluid rounded">
+                </div>
+            </div>
+            <div class="col-md-7" data-aos="fade-left">
+                <h2 class="section-heading">Professional Biography</h2>
+                <p class="mb-4">As a dedicated GIS specialist and forest resource management expert, I bring together technical expertise and environmental passion to create sustainable solutions for forest conservation and management challenges.</p>
+                
+                <p class="mb-4">With over a decade of experience in the field, I've worked on projects ranging from national forest inventories to real-time deforestation monitoring systems. My approach combines advanced spatial technologies with a deep understanding of ecological processes to deliver actionable insights for decision-makers.</p>
+                
+                <p class="mb-4">I'm committed to promoting the use of open-source technologies and making spatial data more accessible and usable for environmental management. Through my work, I aim to bridge the gap between cutting-edge technology and practical field applications.</p>
+                
+                <div class="d-flex mt-4">
+                    <a href="{{ url_for('download_cv') }}" class="btn btn-primary me-3">
+                        <i class="fas fa-download me-2"></i> Download CV
+                    </a>
+                    <a href="{{ url_for('contact') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-envelope me-2"></i> Contact Me
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Education & Experience -->
+<section class="education-experience py-5 bg-light">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-heading" data-aos="fade-up">Education & Work Process</h2>
+                <p class="text-muted" data-aos="fade-up" data-aos-delay="100">My academic background and professional approach</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4" data-aos="fade-up">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title h4 mb-4">Education</h3>
+                        
+                        <div class="education-item mb-4">
+                            <h4 class="h5">Ph.D. in Environmental Remote Sensing</h4>
+                            <p class="text-muted">University of Environmental Sciences, 2015-2019</p>
+                            <p>Thesis: "Advanced Remote Sensing Techniques for Forest Degradation Monitoring"</p>
+                        </div>
+                        
+                        <div class="education-item mb-4">
+                            <h4 class="h5">M.Sc. in Geographic Information Science</h4>
+                            <p class="text-muted">Technical University, 2012-2014</p>
+                            <p>Focus on spatial analysis and environmental applications of GIS</p>
+                        </div>
+                        
+                        <div class="education-item">
+                            <h4 class="h5">B.Sc. in Forestry</h4>
+                            <p class="text-muted">National University, 2008-2012</p>
+                            <p>Specialization in forest management and conservation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title h4 mb-4">Work Process</h3>
+                        
+                        <div class="work-process-item mb-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="process-icon me-3">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <h4 class="h5 mb-0">Research & Analysis</h4>
+                            </div>
+                            <p>Deep understanding of project requirements and thorough analysis of available data.</p>
+                        </div>
+                        
+                        <div class="work-process-item mb-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="process-icon me-3">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                                <h4 class="h5 mb-0">Technical Implementation</h4>
+                            </div>
+                            <p>Applying appropriate technologies and methodologies to solve specific problems.</p>
+                        </div>
+                        
+                        <div class="work-process-item mb-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="process-icon me-3">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <h4 class="h5 mb-0">Visualization & Interpretation</h4>
+                            </div>
+                            <p>Creating clear visualizations and actionable insights from complex spatial data.</p>
+                        </div>
+                        
+                        <div class="work-process-item">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="process-icon me-3">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </div>
+                                <h4 class="h5 mb-0">Knowledge Transfer</h4>
+                            </div>
+                            <p>Sharing results and building capacity through documentation and training.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section class="skills py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-heading" data-aos="fade-up">Core Expertise</h2>
+                <p class="text-muted" data-aos="fade-up" data-aos-delay="100">Specialized skills and technical proficiencies</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for category, skill_list in skills.items() %}
+            <div class="col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
+                <div class="card h-100 skill-card">
+                    <div class="card-body">
+                        <h3 class="card-title h5 mb-3">{{ category }}</h3>
+                        <ul class="skill-list list-unstyled">
+                            {% for skill in skill_list %}
+                            <li class="mb-2">
+                                <i class="fas fa-check-circle text-primary me-2"></i> {{ skill }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Certificates Section -->
+<section class="certificates py-5 bg-light">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-heading" data-aos="fade-up">Certifications</h2>
+                <p class="text-muted" data-aos="fade-up" data-aos-delay="100">Professional qualifications and specialized training</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4" data-aos="fade-up">
+                <div class="card h-100 certificate-card">
+                    <div class="card-body">
+                        <div class="certificate-badge mb-3">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3 class="card-title h5">Certified GIS Professional (GISP)</h3>
+                        <p class="text-muted">GIS Certification Institute</p>
+                        <p class="mb-3">Recognition of professional expertise in geographic information systems</p>
+                        <a href="#" class="btn btn-sm btn-outline-primary">View Certificate</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card h-100 certificate-card">
+                    <div class="card-body">
+                        <div class="certificate-badge mb-3">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3 class="card-title h5">Google Earth Engine Certification</h3>
+                        <p class="text-muted">Google Earth Outreach</p>
+                        <p class="mb-3">Advanced proficiency in using Google Earth Engine for environmental applications</p>
+                        <a href="#" class="btn btn-sm btn-outline-primary">View Certificate</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card h-100 certificate-card">
+                    <div class="card-body">
+                        <div class="certificate-badge mb-3">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3 class="card-title h5">Advanced Python for Spatial Analysis</h3>
+                        <p class="text-muted">Spatial Python Institute</p>
+                        <p class="mb-3">Expert-level proficiency in Python programming for geospatial applications</p>
+                        <a href="#" class="btn btn-sm btn-outline-primary">View Certificate</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTAs Section -->
+<section class="cta-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-4" data-aos="fade-up">
+                <div class="card bg-primary text-white cta-card">
+                    <div class="card-body p-4 text-center">
+                        <h3 class="card-title mb-3">View My Projects</h3>
+                        <p class="card-text mb-4">Explore my portfolio of GIS, remote sensing, and forest management projects.</p>
+                        <a href="{{ url_for('projects') }}" class="btn btn-light">Browse Projects</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card bg-dark text-white cta-card">
+                    <div class="card-body p-4 text-center">
+                        <h3 class="card-title mb-3">Let's Connect</h3>
+                        <p class="card-text mb-4">Have a project idea or interested in collaboration? Get in touch.</p>
+                        <a href="{{ url_for('contact') }}" class="btn btn-light">Contact Me</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

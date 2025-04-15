@@ -9,37 +9,31 @@ if %ERRORLEVEL% NEQ 0 (
     exit /b
 )
 
-REM Configure Git with token
-git config --global credential.helper store
-echo https://ngobac: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@github.com > "%USERPROFILE%\.git-credentials"
-
-REM Initialize Git repository if not already initialized
-if not exist .git (
-    echo Initializing Git repository...
-    git init
-)
-
 REM Add all files to the staging area
 git add .
 
 REM Commit the changes
-git commit -m "Initial WebGIS project commit"
-
-REM Set the remote origin if not already set
-git remote -v | findstr origin >nul
-if %ERRORLEVEL% NEQ 0 (
-    echo Setting remote origin...
-    git remote add origin https://github.com/ngobac/WebGIS-Project.git
-)
+set /p COMMIT_MSG="Enter commit message (or press Enter for default message): "
+if "%COMMIT_MSG%"=="" set COMMIT_MSG="Updated WebGIS project files"
+git commit -m "%COMMIT_MSG%"
 
 REM Push to GitHub
 echo Pushing to GitHub...
 git branch -M main
-git push -u origin main --force
+git push -u origin main
 
-REM Clean up credentials (optional for security)
-REM echo Cleaning up credentials...
-REM del "%USERPROFILE%\.git-credentials"
+if %ERRORLEVEL% NEQ 0 (
+    echo.
+    echo Failed to push to GitHub. You may need to authenticate.
+    echo.
+    echo Options:
+    echo 1. Use HTTPS with username and password/token
+    echo 2. Set up SSH keys for GitHub
+    echo.
+    echo For more information, visit: https://docs.github.com/en/authentication
+    pause
+    exit /b
+)
 
 echo.
 echo Upload complete! Your code is now available at:

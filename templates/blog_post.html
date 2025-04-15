@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - GeoSpatial Expert{% endblock %}
+
+{% block main_class %}blog-post-page{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="blog-post-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url_for('blog') }}">Blog</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ post.title }}</li>
+                    </ol>
+                </nav>
+                <span class="badge bg-primary mb-3">{{ post.category }}</span>
+                <h1 class="fw-bold mb-3">{{ post.title }}</h1>
+                <div class="blog-meta text-muted mb-4">
+                    <span class="me-3"><i class="far fa-calendar-alt me-1"></i> {{ post.date }}</span>
+                    <span><i class="far fa-clock me-1"></i> 10 min read</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Post Content -->
+<section class="blog-post-content py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="blog-featured-image mb-4">
+                    <img src="{{ post.image }}" alt="{{ post.title }}" class="img-fluid rounded">
+                </div>
+                
+                <div class="blog-content">
+                    <p class="lead">{{ post.excerpt }}</p>
+                    
+                    <!-- Sample content for blog post - would be replaced with real content from the database -->
+                    <p>The field of remote sensing and Geographic Information Systems (GIS) has seen remarkable advancements in recent years, revolutionizing how we monitor and manage forest resources. This article delves into the practical applications of these technologies for sustainable forest management.</p>
+                    
+                    <h2>Understanding the Technology</h2>
+                    <p>Remote sensing technologies provide a wealth of data about forest ecosystems without requiring extensive field surveys. By analyzing spectral signatures captured by satellite or aerial sensors, we can identify tree species, assess forest health, and detect changes over time.</p>
+                    
+                    <figure class="figure my-4">
+                        <img src="{{ url_for('static', filename='img/blog/content-image-1.jpg') }}" class="figure-img img-fluid rounded" alt="Remote sensing visualization">
+                        <figcaption class="figure-caption text-center">Remote sensing visualization of forest canopy structure</figcaption>
+                    </figure>
+                    
+                    <p>Geographic Information Systems (GIS) allow us to integrate this remotely sensed data with other spatial information, creating comprehensive analyses that support decision-making for forest management. GIS provides the tools to visualize, query, analyze, and interpret data to understand relationships, patterns, and trends.</p>
+                    
+                    <h2>Applications in Forest Management</h2>
+                    <p>The combination of remote sensing and GIS offers powerful capabilities for forest management:</p>
+                    
+                    <ul>
+                        <li><strong>Forest Inventory:</strong> Accurately assess forest stock, biomass, and carbon sequestration potential</li>
+                        <li><strong>Change Detection:</strong> Monitor deforestation, reforestation, and forest degradation over time</li>
+                        <li><strong>Fire Management:</strong> Identify high-risk areas and plan prevention strategies</li>
+                        <li><strong>Biodiversity Assessment:</strong> Map habitat connectivity and biodiversity hotspots</li>
+                        <li><strong>Pest and Disease Monitoring:</strong> Early detection of outbreaks to minimize damage</li>
+                    </ul>
+                    
+                    <h2>Technical Implementation</h2>
+                    <p>Here's a simplified Python code example using Google Earth Engine (GEE) API to analyze forest cover change:</p>
+                    
+                    <pre><code class="language-python">
+import ee
+ee.Initialize()
+
+# Define the study area
+roi = ee.Geometry.Rectangle([106.6, 10.7, 106.8, 10.9])
+
+# Load Landsat imagery
+landsat2000 = ee.ImageCollection('LANDSAT/LT05/C01/T1_SR') \
+    .filterDate('2000-01-01', '2000-12-31') \
+    .filterBounds(roi) \
+    .median()
+
+landsat2020 = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR') \
+    .filterDate('2020-01-01', '2020-12-31') \
+    .filterBounds(roi) \
+    .median()
+
+# Calculate NDVI for both periods
+ndvi2000 = landsat2000.normalizedDifference(['B4', 'B3']).rename('NDVI_2000')
+ndvi2020 = landsat2020.normalizedDifference(['B5', 'B4']).rename('NDVI_2020')
+
+# Define forest threshold
+forestThreshold = 0.5
+
+# Create forest/non-forest masks
+forest2000 = ndvi2000.gt(forestThreshold)
+forest2020 = ndvi2020.gt(forestThreshold)
+
+# Calculate forest change
+forestLoss = forest2000.eq(1).And(forest2020.eq(0))
+forestGain = forest2000.eq(0).And(forest2020.eq(1))
+
+# Calculate area statistics
+forestLossArea = forestLoss.multiply(ee.Image.pixelArea()).reduceRegion(
+    reducer=ee.Reducer.sum(),
+    geometry=roi,
+    scale=30,
+    maxPixels=1e9
+)
+
+print('Forest loss area (sq m):', forestLossArea.get('NDVI_2000'))
+                    </code></pre>
+                    
+                    <h2>Challenges and Future Directions</h2>
+                    <p>Despite the enormous potential, several challenges remain:</p>
+                    
+                    <ol>
+                        <li>Cloud cover often limits the utility of optical satellite imagery in tropical regions</li>
+                        <li>High-resolution data can be expensive and computationally intensive to process</li>
+                        <li>Ground-truthing is still essential to validate remotely sensed data</li>
+                        <li>Integration of various data sources with different formats and resolutions</li>
+                    </ol>
+                    
+                    <p>The future of forest monitoring lies in the integration of multiple technologies. Synthetic Aperture Radar (SAR) can penetrate clouds and provide information about forest structure. LiDAR offers detailed 3D information about canopy height and structure. Machine learning algorithms are increasingly improving the accuracy of forest classification and change detection.</p>
+                    
+                    <blockquote class="blockquote my-4">
+                        <p>"The combination of remote sensing and GIS has transformed forest management from a reactive to a proactive discipline, enabling managers to anticipate and address challenges before they become crises."</p>
+                    </blockquote>
+                    
+                    <h2>Conclusion</h2>
+                    <p>Remote sensing and GIS technologies have become indispensable tools for sustainable forest management. By providing comprehensive, accurate, and timely information about forest resources, these technologies support evidence-based decision-making that balances ecological, economic, and social objectives. As technology continues to evolve, the possibilities for forest monitoring and management will only expand, offering new opportunities to ensure the health and sustainability of our forest ecosystems.</p>
+                </div>
+                
+                <!-- Author Info -->
+                <div class="author-info mt-5 p-4 bg-light rounded">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            <img src="{{ url_for('static', filename='img/profile.jpg') }}" alt="Author" class="img-fluid rounded-circle">
+                        </div>
+                        <div class="col-md-10">
+                            <h4>About the Author</h4>
+                            <p>GIS Specialist and forest resource management expert with over a decade of experience in applying spatial technologies to environmental challenges.</p>
+                            <div class="social-icons">
+                                <a href="#" class="me-2"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" class="me-2"><i class="fab fa-github"></i></a>
+                                <a href="#" class="me-2"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Related Posts -->
+                <div class="related-posts mt-5">
+                    <h3 class="mb-4">Related Articles</h3>
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card blog-card h-100">
+                                <img src="{{ url_for('static', filename='img/blog/python-spatial.jpg') }}" class="card-img-top" alt="Python for Spatial Analysis">
+                                <div class="card-body">
+                                    <span class="badge bg-success mb-2">Python</span>
+                                    <h4 class="card-title h6">Python for Spatial Analysis: A Beginner's Guide</h4>
+                                    <a href="{{ url_for('blog_post', post_id=2) }}" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card blog-card h-100">
+                                <img src="{{ url_for('static', filename='img/blog/rs-innovations.jpg') }}" class="card-img-top" alt="Remote Sensing Innovations">
+                                <div class="card-body">
+                                    <span class="badge bg-info mb-2">Technology</span>
+                                    <h4 class="card-title h6">Latest Innovations in Remote Sensing Technology</h4>
+                                    <a href="{{ url_for('blog_post', post_id=3) }}" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card blog-card h-100">
+                                <img src="{{ url_for('static', filename='img/blog/fire-ml.jpg') }}" class="card-img-top" alt="Forest Fire Risk Assessment">
+                                <div class="card-body">
+                                    <span class="badge bg-danger mb-2">Research</span>
+                                    <h4 class="card-title h6">Forest Fire Risk Assessment Using Machine Learning</h4>
+                                    <a href="{{ url_for('blog_post', post_id=5) }}" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Comments Section -->
+                <div class="comments-section mt-5">
+                    <h3 class="mb-4">Comments (3)</h3>
+                    
+                    <div class="comment mb-4 p-3 border rounded">
+                        <div class="d-flex">
+                            <div class="comment-avatar me-3">
+                                <div class="avatar-placeholder">JD</div>
+                            </div>
+                            <div class="comment-content">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h5 class="mb-0">John Doe</h5>
+                                    <small class="text-muted">2 days ago</small>
+                                </div>
+                                <p>Great article! I've been using GEE for similar analyses, but your approach to forest change detection is more efficient. Will definitely try implementing this method.</p>
+                                <button class="btn btn-sm btn-outline-secondary">Reply</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="comment mb-4 p-3 border rounded">
+                        <div class="d-flex">
+                            <div class="comment-avatar me-3">
+                                <div class="avatar-placeholder">MS</div>
+                            </div>
+                            <div class="comment-content">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h5 class="mb-0">Maria Smith</h5>
+                                    <small class="text-muted">3 days ago</small>
+                                </div>
+                                <p>Have you tried incorporating Sentinel-1 SAR data to address the cloud cover issue you mentioned? I've found it works well in combination with optical data for tropical regions.</p>
+                                <button class="btn btn-sm btn-outline-secondary">Reply</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="comment mb-4 p-3 border rounded">
+                        <div class="d-flex">
+                            <div class="comment-avatar me-3">
+                                <div class="avatar-placeholder">RJ</div>
+                            </div>
+                            <div class="comment-content">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h5 class="mb-0">Robert Johnson</h5>
+                                    <small class="text-muted">5 days ago</small>
+                                </div>
+                                <p>Could you elaborate more on how you handle validation of the forest classification? I'm working on a similar project and finding that ground-truthing is challenging in remote areas.</p>
+                                <button class="btn btn-sm btn-outline-secondary">Reply</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Comment Form -->
+                    <div class="comment-form mt-4">
+                        <h4 class="mb-3">Leave a Comment</h4>
+                        <form>
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="Your Name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" placeholder="Your Email" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" rows="4" placeholder="Your Comment" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Post Comment</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

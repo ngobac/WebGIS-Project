@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog - GeoSpatial Expert{% endblock %}
+
+{% block main_class %}blog-page{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="fw-bold">Blog & Resources</h1>
+                <p class="lead">Insights, tutorials, and updates on GIS and remote sensing</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Categories -->
+<section class="blog-categories py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="category-filters text-center">
+                    <button class="btn btn-outline-primary me-2 mb-2 active" data-filter="all">All</button>
+                    <button class="btn btn-outline-primary me-2 mb-2" data-filter="GIS/RS Tools">GIS/RS Tools</button>
+                    <button class="btn btn-outline-primary me-2 mb-2" data-filter="Python">Python</button>
+                    <button class="btn btn-outline-primary me-2 mb-2" data-filter="Technology">Technology</button>
+                    <button class="btn btn-outline-primary me-2 mb-2" data-filter="Tutorials">Tutorials</button>
+                    <button class="btn btn-outline-primary me-2 mb-2" data-filter="Research">Research</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Posts Grid -->
+<section class="blog-grid py-5">
+    <div class="container">
+        <div class="row">
+            {% for post in posts %}
+            <div class="col-md-6 col-lg-4 mb-4 blog-item" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}" data-category="{{ post.category }}">
+                <div class="card blog-card h-100">
+                    <img src="{{ post.image }}" class="card-img-top" alt="{{ post.title }}">
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-2">{{ post.category }}</span>
+                        <h3 class="card-title h5">{{ post.title }}</h3>
+                        <p class="card-text">{{ post.excerpt }}</p>
+                        <div class="blog-meta text-muted small mb-3">
+                            <i class="far fa-calendar-alt me-1"></i> {{ post.date }}
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <a href="{{ url_for('blog_post', post_id=post.id) }}" class="btn btn-sm btn-outline-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-heading" data-aos="fade-up">Stay Updated</h2>
+                <p class="text-muted mb-4" data-aos="fade-up" data-aos-delay="100">Subscribe to receive the latest articles and resources directly in your inbox.</p>
+                <div class="newsletter-form" data-aos="fade-up" data-aos-delay="200">
+                    <form class="row g-2 justify-content-center">
+                        <div class="col-md-6">
+                            <input type="email" class="form-control" placeholder="Your email address">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Blog filtering functionality
+        const filterButtons = document.querySelectorAll('.category-filters button');
+        const blogItems = document.querySelectorAll('.blog-item');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                
+                // Show/hide blog items based on filter
+                blogItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

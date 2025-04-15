@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+
+{% block title %}GeoSpatial Expert - Forest Resource Management{% endblock %}
+
+{% block main_class %}home-page{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-background">
+        <!-- Background video/animation will be handled by CSS -->
+        <div class="overlay"></div>
+    </div>
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 data-aos="fade-up" data-aos-delay="100">GeoSpatial Expert</h1>
+                <p class="lead mb-4" data-aos="fade-up" data-aos-delay="200">
+                    Converting spatial data into knowledge for sustainable forests
+                </p>
+                <p class="mb-5" data-aos="fade-up" data-aos-delay="300">
+                    Specializing in advanced GIS, remote sensing, and spatial analysis for forest resource management.
+                </p>
+                <a href="{{ url_for('about') }}" class="btn btn-primary btn-lg" data-aos="fade-up" data-aos-delay="400">
+                    Discover More <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Overview Section -->
+<section class="overview py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4" data-aos="fade-up">
+                <div class="card h-100 overview-card">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h3 class="card-title h4">GIS Expertise</h3>
+                        <p class="card-text">Specialized in using Geographic Information Systems for forest resource management and environmental analysis.</p>
+                        <a href="{{ url_for('about') }}" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card h-100 overview-card">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-satellite"></i>
+                        </div>
+                        <h3 class="card-title h4">Remote Sensing</h3>
+                        <p class="card-text">Using satellite imagery and advanced remote sensing techniques to monitor forest health and detect changes.</p>
+                        <a href="{{ url_for('about') }}" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card h-100 overview-card">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="card-title h4">Python Development</h3>
+                        <p class="card-text">Creating custom Python tools and applications for spatial analysis and environmental modeling.</p>
+                        <a href="{{ url_for('tools') }}" class="btn btn-sm btn-outline-primary mt-3">View Tools</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects Section -->
+<section class="featured-projects py-5 bg-light">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-heading" data-aos="fade-up">Featured Projects</h2>
+                <p class="text-muted" data-aos="fade-up" data-aos-delay="100">A selection of recent work in forest monitoring and environmental analysis.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-4" data-aos="fade-up">
+                <div class="card featured-project-card">
+                    <div class="project-image-container">
+                        <img src="{{ url_for('static', filename='img/projects/forest-inventory.jpg') }}" class="card-img-top" alt="National Forest Inventory">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title h5">National Forest Inventory Modernization</h3>
+                        <p class="card-text">Led the technical implementation of modern remote sensing methods to enhance the national forest inventory process.</p>
+                        <a href="{{ url_for('projects') }}" class="btn btn-sm btn-outline-primary">View Project</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card featured-project-card">
+                    <div class="project-image-container">
+                        <img src="{{ url_for('static', filename='img/projects/deforestation-alert.jpg') }}" class="card-img-top" alt="Deforestation Early Warning System">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title h5">Deforestation Early Warning System</h3>
+                        <p class="card-text">Developed an automated system that uses satellite imagery to detect and alert about potential deforestation events.</p>
+                        <a href="{{ url_for('projects') }}" class="btn btn-sm btn-outline-primary">View Project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4" data-aos="fade-up">
+            <a href="{{ url_for('projects') }}" class="btn btn-primary">View All Projects</a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Blog Section -->
+<section class="featured-blog py-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-heading" data-aos="fade-up">Latest Articles</h2>
+                <p class="text-muted" data-aos="fade-up" data-aos-delay="100">Insights and tutorials on GIS, remote sensing, and forest management.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4" data-aos="fade-up">
+                <div class="card blog-card h-100">
+                    <img src="{{ url_for('static', filename='img/blog/gee-forest.jpg') }}" class="card-img-top" alt="Google Earth Engine Blog">
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-2">GIS/RS Tools</span>
+                        <h3 class="card-title h5">Getting Started with Google Earth Engine for Forest Monitoring</h3>
+                        <p class="card-text">Learn how to use Google Earth Engine to monitor forest cover changes over time.</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <a href="{{ url_for('blog_post', post_id=1) }}" class="btn btn-sm btn-outline-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card blog-card h-100">
+                    <img src="{{ url_for('static', filename='img/blog/python-spatial.jpg') }}" class="card-img-top" alt="Python Spatial Analysis Blog">
+                    <div class="card-body">
+                        <span class="badge bg-success mb-2">Python</span>
+                        <h3 class="card-title h5">Python for Spatial Analysis: A Beginner's Guide</h3>
+                        <p class="card-text">This guide walks you through setting up your Python environment for spatial analysis.</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <a href="{{ url_for('blog_post', post_id=2) }}" class="btn btn-sm btn-outline-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card blog-card h-100">
+                    <img src="{{ url_for('static', filename='img/blog/rs-innovations.jpg') }}" class="card-img-top" alt="Remote Sensing Innovations Blog">
+                    <div class="card-body">
+                        <span class="badge bg-info mb-2">Technology</span>
+                        <h3 class="card-title h5">Latest Innovations in Remote Sensing Technology</h3>
+                        <p class="card-text">Exploring cutting-edge remote sensing platforms and their applications in resource management.</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <a href="{{ url_for('blog_post', post_id=3) }}" class="btn btn-sm btn-outline-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4" data-aos="fade-up">
+            <a href="{{ url_for('blog') }}" class="btn btn-primary">View All Articles</a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Maps Section -->
+<section class="featured-maps py-5 bg-light">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-heading" data-aos="fade-up">Interactive Maps</h2>
+                <p class="text-muted" data-aos="fade-up" data-aos-delay="100">Explore interactive web maps showcasing forest and environmental data.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-4" data-aos="fade-up">
+                <div class="card map-card">
+                    <div class="map-image-container">
+                        <img src="{{ url_for('static', filename='img/maps/forest-cover.jpg') }}" class="card-img-top" alt="Forest Cover Map">
+                        <div class="map-overlay">
+                            <a href="{{ url_for('maps') }}" class="btn btn-sm btn-light">Explore Map</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title h5">Forest Cover Change (2000-2025)</h3>
+                        <p class="card-text">Interactive map showing forest cover changes over 25 years with filtering options.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card map-card">
+                    <div class="map-image-container">
+                        <img src="{{ url_for('static', filename='img/maps/fire-monitor.jpg') }}" class="card-img-top" alt="Fire Monitoring Map">
+                        <div class="map-overlay">
+                            <a href="{{ url_for('maps') }}" class="btn btn-sm btn-light">Explore Map</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title h5">Real-time Fire Monitoring</h3>
+                        <p class="card-text">Live map of active fire hotspots with historical data and risk assessment layers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4" data-aos="fade-up">
+            <a href="{{ url_for('maps') }}" class="btn btn-primary">View All Maps</a>
+        </div>
+    </div>
+</section>
+
+<!-- Contact CTA Section -->
+<section class="contact-cta py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-heading" data-aos="fade-up">Let's Work Together</h2>
+                <p class="text-muted mb-5" data-aos="fade-up" data-aos-delay="100">Have a project in mind or interested in collaboration? Get in touch!</p>
+                <a href="{{ url_for('contact') }}" class="btn btn-lg btn-primary" data-aos="fade-up" data-aos-delay="200">Contact Me</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
