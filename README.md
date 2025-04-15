@@ -32,6 +32,17 @@ npm start
 
 This will launch the application in your default web browser.
 
+## Uploading to GitHub
+
+To upload the project to GitHub:
+
+1. Simply run the upload script by double-clicking:
+```
+upload_to_github.bat
+```
+
+This will initialize a Git repository, commit all files, and push to the GitHub repository.
+
 ## Project Structure
 
 - `index.html`: Main HTML file
