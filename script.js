@@ -37,7 +37,7 @@ function createPopupContent(feature, layer) {
 }
 
 // Load GeoJSON data from file
-fetch('../Data/lots.geojson')
+fetch('lots.geojson')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
