@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # WebGIS Project
 
 An interactive web mapping application for forest resource management and environmental data visualization.
@@ -71,3 +72,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Data provided by [Your Data Source]
 - Icons from [Font Awesome](https://fontawesome.com/)
 - Basemaps from OpenStreetMap, ESRI, and CartoDB
+=======
+# WebGIS-Project
+>>>>>>> 36e1e5bae57536d1370bcc224253cb3c979cc58c
