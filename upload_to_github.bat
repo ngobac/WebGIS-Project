@@ -24,15 +24,41 @@ git push -u origin main
 
 if %ERRORLEVEL% NEQ 0 (
     echo.
-    echo Failed to push to GitHub. You may need to authenticate.
+    echo Failed to push to GitHub. This could be due to the remote repository having changes.
     echo.
     echo Options:
-    echo 1. Use HTTPS with username and password/token
-    echo 2. Set up SSH keys for GitHub
+    echo 1. Pull changes first (git pull origin main)
+    echo 2. Force push your changes (will overwrite remote changes)
+    echo 3. Exit and set up authentication
     echo.
-    echo For more information, visit: https://docs.github.com/en/authentication
-    pause
-    exit /b
+    set /p CHOICE="Enter option (1, 2, or 3): "
+    
+    if "%CHOICE%"=="1" (
+        echo.
+        echo Pulling changes from remote repository...
+        git pull origin main
+        echo.
+        echo Now trying to push again...
+        git push -u origin main
+    ) else if "%CHOICE%"=="2" (
+        echo.
+        echo WARNING: This will OVERWRITE any changes on GitHub with your local changes.
+        set /p CONFIRM="Are you sure? (yes/no): "
+        if /i "%CONFIRM%"=="yes" (
+            echo.
+            echo Force pushing to GitHub...
+            git push -f -u origin main
+        ) else (
+            echo Operation cancelled.
+            pause
+            exit /b
+        )
+    ) else (
+        echo.
+        echo For authentication information, visit: https://docs.github.com/en/authentication
+        pause
+        exit /b
+    )
 )
 
 echo.
