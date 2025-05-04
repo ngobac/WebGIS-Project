@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog | GIS & Remote Sensing Expert{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Knowledge Sharing</h1>
+        <div class="breadcrumb">
+            <a href="{{ url_for('home') }}">Home</a> &gt; Blog
+        </div>
+    </div>
+</section>
+
+<section class="blog-filter">
+    <div class="container">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Posts</button>
+            <button class="filter-btn" data-filter="gis-tools">GIS/RS Tools</button>
+            <button class="filter-btn" data-filter="python">Python Analysis</button>
+            <button class="filter-btn" data-filter="technology">New Technology</button>
+            <button class="filter-btn" data-filter="research">Research</button>
+        </div>
+    </div>
+</section>
+
+<section class="blog-posts">
+    <div class="container">
+        <div class="posts-grid">
+            <!-- GIS Tools Posts -->
+            <div class="post-card" data-category="gis-tools">
+                <div class="post-thumbnail">
+                    <img src="{{ url_for('static', filename='images/blog-gis-tools.jpg') }}" alt="GIS Tools Guide">
+                </div>
+                <div class="post-content">
+                    <div class="post-category"><span>GIS/RS Tools</span></div>
+                    <h3>Guide to using GIS/RS tools</h3>
+                    <p>Content</p>
+                    <div class="post-meta">
+                        <span class="post-date"><i class="far fa-calendar-alt"></i> Content</span>
+                        <span class="post-read-time"><i class="far fa-clock"></i> Content</span>
+                    </div>
+                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Python Analysis Posts -->
+            <div class="post-card" data-category="python">
+                <div class="post-thumbnail">
+                    <img src="{{ url_for('static', filename='images/blog-python.jpg') }}" alt="Python Spatial Analysis">
+                </div>
+                <div class="post-content">
+                    <div class="post-category"><span>Python Analysis</span></div>
+                    <h3>Spatial data analysis with Python</h3>
+                    <p>Content</p>
+                    <div class="post-meta">
+                        <span class="post-date"><i class="far fa-calendar-alt"></i> Content</span>
+                        <span class="post-read-time"><i class="far fa-clock"></i> Content</span>
+                    </div>
+                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- New Technology Posts -->
+            <div class="post-card" data-category="technology">
+                <div class="post-thumbnail">
+                    <img src="{{ url_for('static', filename='images/blog-technology.jpg') }}" alt="New Technology">
+                </div>
+                <div class="post-content">
+                    <div class="post-category"><span>New Technology</span></div>
+                    <h3>Update new technology in resource management</h3>
+                    <p>Content</p>
+                    <div class="post-meta">
+                        <span class="post-date"><i class="far fa-calendar-alt"></i> Content</span>
+                        <span class="post-read-time"><i class="far fa-clock"></i> Content</span>
+                    </div>
+                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Research/Projects Posts -->
+            <div class="post-card" data-category="research">
+                <div class="post-thumbnail">
+                    <img src="{{ url_for('static', filename='images/blog-research.jpg') }}" alt="Research Project">
+                </div>
+                <div class="post-content">
+                    <div class="post-category"><span>Research</span></div>
+                    <h3>Research, personal projects</h3>
+                    <p>Content</p>
+                    <div class="post-meta">
+                        <span class="post-date"><i class="far fa-calendar-alt"></i> Content</span>
+                        <span class="post-read-time"><i class="far fa-clock"></i> Content</span>
+                    </div>
+                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- More posts can be added here -->
+            <div class="post-card" data-category="gis-tools">
+                <div class="post-thumbnail">
+                    <img src="{{ url_for('static', filename='images/blog-arcgis.jpg') }}" alt="ArcGIS Pro Tips">
+                </div>
+                <div class="post-content">
+                    <div class="post-category"><span>GIS/RS Tools</span></div>
+                    <h3>Advanced ArcGIS Pro Tips for Forest Analysis</h3>
+                    <p>Content</p>
+                    <div class="post-meta">
+                        <span class="post-date"><i class="far fa-calendar-alt"></i> Content</span>
+                        <span class="post-read-time"><i class="far fa-clock"></i> Content</span>
+                    </div>
+                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="post-card" data-category="python">
+                <div class="post-thumbnail">
+                    <img src="{{ url_for('static', filename='images/blog-python-gee.jpg') }}" alt="Python with GEE">
+                </div>
+                <div class="post-content">
+                    <div class="post-category"><span>Python Analysis</span></div>
+                    <h3>Integrating Python with Google Earth Engine</h3>
+                    <p>Content</p>
+                    <div class="post-meta">
+                        <span class="post-date"><i class="far fa-calendar-alt"></i> Content</span>
+                        <span class="post-read-time"><i class="far fa-clock"></i> Content</span>
+                    </div>
+                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="newsletter">
+    <div class="container">
+        <div class="newsletter-container">
+            <div class="newsletter-content">
+                <h2>Subscribe to My Newsletter</h2>
+                <p>Stay updated with the latest in GIS, remote sensing, and forest resource management.</p>
+            </div>
+            <div class="newsletter-form">
+                <form>
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Blog post filtering
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const postCards = document.querySelectorAll('.post-card');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                
+                postCards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.classList.add('show');
+                        }, 100);
+                    } else {
+                        if (card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.classList.add('show');
+                            }, 100);
+                        } else {
+                            card.classList.remove('show');
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    }
+                });
+            });
+        });
+        
+        // Card hover animation
+        postCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.classList.add('hover');
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.classList.remove('hover');
+            });
+        });
+    });
+</script>
+{% endblock %}
