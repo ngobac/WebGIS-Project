@@ -1,0 +1,38 @@
+# Môi trường và API keys
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Thư mục ảo Python
+venv/
+ENV/
+
+# Các file IDE và Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Các file log
+*.log
