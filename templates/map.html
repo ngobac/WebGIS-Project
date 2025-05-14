@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}Interactive Map | GIS & Remote Sensing Expert{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css">
+<style>
+    .map-container {
+        height: 80vh;
+        width: 100%;
+        position: relative;
+    }
+    
+    #map {
+        height: 100%;
+        width: 100%;
+    }
+    
+    .map-overlay {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+        background: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        max-width: 300px;
+    }
+    
+    .arcgis-embed {
+        height: 100%;
+        width: 100%;
+        border: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Interactive Map</h1>
+        <div class="breadcrumb">
+            <a href="{{ url_for('home') }}">Home</a> &gt; Interactive Map
+        </div>
+    </div>
+</section>
+
+<section class="map-section">
+    <div class="container-fluid">
+        <div class="map-intro">
+            <p>Explore my interactive web map showcasing various forest resource management projects and spatial analyses.</p>
+        </div>
+        
+        <div class="map-container">
+            <!-- This is where your ArcGIS Online Webmap will be embedded -->
+            <iframe class="arcgis-embed" src="https://gis-plaines.com/portal/apps/webappviewer/index.html?id=b509d95262f64748a82ca3ecbe6c1a75" allowfullscreen></iframe>
+            
+            <div class="map-overlay">
+                <h3>Map Legend</h3>
+                <div class="legend-content">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #2ca25f;"></span>
+                        <span class="legend-label">Forest Cover</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #8856a7;"></span>
+                        <span class="legend-label">Project Areas</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #e34a33;"></span>
+                        <span class="legend-label">Critical Habitats</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #fdbb84;"></span>
+                        <span class="legend-label">Land Use Change</span>
+                    </div>
+                </div>
+                <div class="map-instructions">
+                    <p><small>Zoom and pan to explore different areas. Click on features for detailed information.</small></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="map-description">
+            <h2>About This Map</h2>
+            <p>This interactive map showcases various forest resource management projects and spatial analyses I've conducted. The map integrates multiple datasets including forest cover, land use change, biodiversity hotspots, and project implementation areas.</p>
+            
+            <div class="map-features">
+                <div class="feature">
+                    <h3><i class="fas fa-layer-group"></i> Multi-layer Analysis</h3>
+                    <p>Toggle between different data layers to explore various aspects of forest management.</p>
+                </div>
+                <div class="feature">
+                    <h3><i class="fas fa-chart-line"></i> Time Series Data</h3>
+                    <p>View changes in forest cover and land use over time using the time slider.</p>
+                </div>
+                <div class="feature">
+                    <h3><i class="fas fa-filter"></i> Advanced Filtering</h3>
+                    <p>Filter data by attributes such as forest type, conservation status, or management regime.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+<script>
+    // Additional map functionality can be added here if needed,
+    // though most functionality will be handled by your ArcGIS Online webmap
+</script>
+{% endblock %}

@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% block title %}About | GIS & Remote Sensing Tutorial{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>About Me</h1>
+        <div class="breadcrumb">
+            <a href="{{ url_for('home') }}">Home</a> &gt; About
+        </div>
+    </div>
+</section>
+
+<section class="about-section">
+    <div class="container">
+        <div class="profile-container">
+            <div class="profile-image">
+                <img src="{{ url_for('static', filename='images/profile.jpg') }}" alt="Profile Photo">
+            </div>
+            <div class="profile-details">
+                <h2>Professional Biography</h2>
+                <p>Content</p>
+                <div class="cv-download">
+                    <a href="{{ url_for('static', filename='files/CV.pdf') }}" class="btn" target="_blank">
+                        <i class="fas fa-file-pdf"></i> Download CV
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="education-section">
+    <div class="container">
+        <h2>Education & Work Process</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h3>Content</h3>
+                    <p>Content</p>
+                    <span class="date">Content</span>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h3>Content</h3>
+                    <p>Content</p>
+                    <span class="date">Content</span>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h3>Content</h3>
+                    <p>Content</p>
+                    <span class="date">Content</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="skills-section">
+    <div class="container">
+        <h2>Key Skills</h2>
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3><i class="fas fa-map"></i> Geographic Information Systems (GIS)</h3>
+                <p>Expertise in spatial data management, analysis, and cartography. Proficient in creating meaningful visualizations from complex geospatial data.</p>
+                <div class="skill-level">
+                    <div class="skill-bar" data-level="95"></div>
+                </div>
+            </div>
+            
+            <div class="skill-category">
+                <h3><i class="fas fa-satellite"></i> Remote Sensing</h3>
+                <p>Advanced capabilities in satellite imagery processing, classification, and time-series analysis for environmental monitoring and resource assessment.</p>
+                <div class="skill-level">
+                    <div class="skill-bar" data-level="90"></div>
+                </div>
+            </div>
+            
+            <div class="skill-category">
+                <h3><i class="fas fa-chart-bar"></i> Spatial Analysis</h3>
+                <p>Specialized in complex spatial modeling, statistical analysis, and pattern detection for environmental applications and resource management.</p>
+                <div class="skill-level">
+                    <div class="skill-bar" data-level="85"></div>
+                </div>
+            </div>
+            
+            <div class="skill-category">
+                <h3><i class="fas fa-tree"></i> Forest Resource Management</h3>
+                <p>Applied GIS and remote sensing techniques for sustainable forest management, including inventory, monitoring, and conservation planning.</p>
+                <div class="skill-level">
+                    <div class="skill-bar" data-level="90"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="tech-section">
+    <div class="container">
+        <h2>Technologies & Tools</h2>
+        <div class="tech-container">
+            <div class="tech-item">
+                <div class="tech-icon"><img src="{{ url_for('static', filename='images/gee-icon.png') }}" alt="Google Earth Engine"></div>
+                <h4>Google Earth Engine</h4>
+            </div>
+            <div class="tech-item">
+                <div class="tech-icon"><img src="{{ url_for('static', filename='images/arcgis-icon.png') }}" alt="ArcGIS Pro"></div>
+                <h4>ArcGIS Pro</h4>
+            </div>
+            <div class="tech-item">
+                <div class="tech-icon"><img src="{{ url_for('static', filename='images/qgis-icon.png') }}" alt="QGIS"></div>
+                <h4>QGIS</h4>
+            </div>
+            <div class="tech-item">
+                <div class="tech-icon"><img src="{{ url_for('static', filename='images/python-icon.png') }}" alt="Python"></div>
+                <h4>Python</h4>
+            </div>
+            <div class="tech-item">
+                <div class="tech-icon"><img src="{{ url_for('static', filename='images/mapbox-icon.png') }}" alt="Mapbox"></div>
+                <h4>Mapbox</h4>
+            </div>
+            <div class="tech-item">
+                <div class="tech-icon"><img src="{{ url_for('static', filename='images/r-icon.png') }}" alt="R"></div>
+                <h4>R</h4>
+            </div>
+            <div class="tech-item">
+                <div class="tech-icon"><img src="{{ url_for('static', filename='images/erdas-icon.png') }}" alt="ERDAS Imagine"></div>
+                <h4>ERDAS Imagine</h4>
+            </div>
+            <div class="tech-item">
+                <div class="tech-icon"><img src="{{ url_for('static', filename='images/envi-icon.png') }}" alt="ENVI"></div>
+                <h4>ENVI</h4>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="certificates-section">
+    <div class="container">
+        <h2>Certificates & Qualifications</h2>
+        <div class="certificates-container">
+            <div class="certificate">
+                <div class="certificate-logo">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <div class="certificate-details">
+                    <h3>Content</h3>
+                    <p>Content</p>
+                    <a href="#" class="certificate-link">View Certificate</a>
+                </div>
+            </div>
+            <div class="certificate">
+                <div class="certificate-logo">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <div class="certificate-details">
+                    <h3>Content</h3>
+                    <p>Content</p>
+                    <a href="#" class="certificate-link">View Certificate</a>
+                </div>
+            </div>
+            <div class="certificate">
+                <div class="certificate-logo">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <div class="certificate-details">
+                    <h3>Content</h3>
+                    <p>Content</p>
+                    <a href="#" class="certificate-link">View Certificate</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Animate skill bars on scroll
+    document.addEventListener('DOMContentLoaded', function() {
+        const skillBars = document.querySelectorAll('.skill-bar');
+        
+        function animateSkillBars() {
+            skillBars.forEach(bar => {
+                const level = bar.getAttribute('data-level');
+                bar.style.width = level + '%';
+            });
+        }
+        
+        // Run on initial load
+        setTimeout(animateSkillBars, 500);
+        
+        // Run on scroll into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(animateSkillBars, 200);
+                }
+            });
+        });
+        
+        document.querySelector('.skills-container').querySelectorAll('.skill-category').forEach(item => {
+            observer.observe(item);
+        });
+    });
+</script>
+{% endblock %}

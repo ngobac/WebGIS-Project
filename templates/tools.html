@@ -1,0 +1,307 @@
+{% extends 'base.html' %}
+
+{% block title %}Tools & Software | GIS & Remote Sensing Expert{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Software & Tools</h1>
+        <div class="breadcrumb">
+            <a href="{{ url_for('home') }}">Home</a> &gt; Tools
+        </div>
+    </div>
+</section>
+
+<section class="tools-section">
+    <div class="container">
+        <div class="section-intro">
+            <p>Browse through my collection of custom-developed tools for GIS, remote sensing, and spatial analysis. These tools are designed to streamline workflows and solve specific challenges in forest resource management.</p>
+        </div>
+        
+        <div class="tools-grid">
+            <!-- Python Script Tool -->
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <i class="fab fa-python"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Forest Change Detection Tool</h3>
+                    <div class="tool-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Remote Sensing</span>
+                        <span class="tag">Time Series</span>
+                    </div>
+                    <p>A Python script that automates forest change detection using multi-temporal satellite imagery. The tool identifies areas of deforestation, reforestation, and forest degradation.</p>
+                    
+                    <div class="code-preview">
+                        <pre><code>import os
+import numpy as np
+import rasterio
+from rasterio.mask import mask
+import geopandas as gpd
+from sklearn.ensemble import RandomForestClassifier
+import matplotlib.pyplot as plt
+
+def forest_change_detection(img_t1_path, img_t2_path, aoi_path=None, output_dir=None):
+    """
+    Detect forest changes between two satellite images.
+    
+    Parameters:
+    -----------
+    img_t1_path : str
+        Path to the earlier time image (T1)
+    img_t2_path : str
+        Path to the later time image (T2)
+    aoi_path : str, optional
+        Path to the area of interest shapefile
+    output_dir : str, optional
+        Directory to save outputs
+        
+    Returns:
+    --------
+    change_map : numpy.ndarray
+        Classification of forest change:
+            1: Stable forest
+            2: Deforestation
+            3: Reforestation
+            4: Forest degradation
+            5: Non-forest
+    """
+    # Create output directory if it doesn't exist
+    if output_dir and not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    # Read raster data
+    with rasterio.open(img_t1_path) as src1:
+        img_meta = src1.meta
+        if aoi_path:
+            # Clip to area of interest if provided
+            aoi = gpd.read_file(aoi_path)
+            aoi = aoi.to_crs(src1.crs)
+            geoms = [feature["geometry"] for _, feature in aoi.iterrows()]
+            img_t1, _ = mask(src1, geoms, crop=True)
+        else:
+            img_t1 = src1.read()
+    
+    with rasterio.open(img_t2_path) as src2:
+        if aoi_path:
+            img_t2, transform = mask(src2, geoms, crop=True)
+            img_meta.update({
+                "height": img_t2.shape[1],
+                "width": img_t2.shape[2],
+                "transform": transform
+            })
+        else:
+            img_t2 = src2.read()
+    
+    # Calculate vegetation indices (e.g., NDVI)
+    ndvi_t1 = calculate_ndvi(img_t1)
+    ndvi_t2 = calculate_ndvi(img_t2)
+    
+    # Calculate change metrics
+    ndvi_diff = ndvi_t2 - ndvi_t1
+    
+    # Create training dataset based on thresholds
+    train_data = np.vstack([
+        ndvi_t1.flatten(),
+        ndvi_t2.flatten(),
+        ndvi_diff.flatten()
+    ]).T
+    
+    # Simple thresholding for demonstration
+    # (In practice, use actual training data)
+    forest_threshold = 0.5
+    change_threshold = 0.1
+    
+    # Classification using Random Forest
+    train_labels = np.zeros(train_data.shape[0], dtype=np.int8)
+    train_labels[(ndvi_t1 > forest_threshold) & (ndvi_t2 > forest_threshold)] = 1  # Stable forest
+    train_labels[(ndvi_t1 > forest_threshold) & (ndvi_t2 < forest_threshold)] = 2  # Deforestation
+    train_labels[(ndvi_t1 < forest_threshold) & (ndvi_t2 > forest_threshold)] = 3  # Reforestation
+    train_labels[(ndvi_t1 > forest_threshold) & 
+                 (ndvi_t2 > forest_threshold) & 
+                 (ndvi_diff < -change_threshold)] = 4  # Degradation
+    train_labels[(ndvi_t1 < forest_threshold) & (ndvi_t2 < forest_threshold)] = 5  # Non-forest
+    
+    # Train classifier
+    clf = RandomForestClassifier(n_estimators=100, random_state=42)
+    clf.fit(train_data, train_labels)
+    
+    # Apply classification
+    change_map = clf.predict(train_data).reshape(ndvi_t1.shape)
+    
+    # Save results
+    if output_dir:
+        # Save change map
+        change_map_path = os.path.join(output_dir, "forest_change_map.tif")
+        with rasterio.open(
+            change_map_path, 'w',
+            driver='GTiff',
+            height=change_map.shape[0],
+            width=change_map.shape[1],
+            count=1,
+            dtype=change_map.dtype,
+            crs=img_meta['crs'],
+            transform=img_meta['transform']
+        ) as dst:
+            dst.write(change_map, 1)
+        
+        # Create change statistics
+        stats = {
+            'Stable forest': np.sum(change_map == 1),
+            'Deforestation': np.sum(change_map == 2),
+            'Reforestation': np.sum(change_map == 3),
+            'Forest degradation': np.sum(change_map == 4),
+            'Non-forest': np.sum(change_map == 5)
+        }
+        
+        # Create a simple visualization
+        plt.figure(figsize=(12, 8))
+        colors = ['darkgreen', 'red', 'lightgreen', 'orange', 'gray']
+        cmap = plt.matplotlib.colors.ListedColormap(colors)
+        plt.imshow(change_map, cmap=cmap, vmin=1, vmax=5)
+        plt.colorbar(ticks=[1, 2, 3, 4, 5], 
+                     label=['Stable forest', 'Deforestation', 'Reforestation', 
+                            'Forest degradation', 'Non-forest'])
+        plt.title('Forest Change Detection Map')
+        plt.savefig(os.path.join(output_dir, "forest_change_map.png"), dpi=300)
+    
+    return change_map
+
+def calculate_ndvi(img):
+    """Calculate the Normalized Difference Vegetation Index"""
+    # Assuming band 4 is NIR and band 3 is RED
+    nir = img[3].astype(np.float32)
+    red = img[2].astype(np.float32)
+    
+    # Avoid division by zero
+    mask = (nir + red) > 0
+    ndvi = np.zeros_like(nir)
+    ndvi[mask] = (nir[mask] - red[mask]) / (nir[mask] + red[mask])
+    
+    return ndvi
+
+if __name__ == "__main__":
+    # Example usage
+    img_t1_path = "path/to/landsat_2020.tif"
+    img_t2_path = "path/to/landsat_2022.tif"
+    aoi_path = "path/to/study_area.shp"
+    output_dir = "path/to/output"
+    
+    change_map = forest_change_detection(img_t1_path, img_t2_path, aoi_path, output_dir)
+    print("Forest change detection completed successfully!")</code></pre>
+                    </div>
+                    
+                    <div class="tool-links">
+                        <a href="#" class="btn"><i class="fab fa-github"></i> GitHub Repository</a>
+                        <a href="#" class="btn"><i class="fas fa-download"></i> Download</a>
+                        <a href="#" class="btn"><i class="fas fa-book"></i> Documentation</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- QGIS Plugin Tool -->
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-puzzle-piece"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Forest Inventory QGIS Plugin</h3>
+                    <div class="tool-tags">
+                        <span class="tag">QGIS</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">Forest Management</span>
+                    </div>
+                    <p>A QGIS plugin for managing and analyzing forest inventory data. Features include plot data management, statistical analysis, and inventory report generation.</p>
+                    <div class="tool-features">
+                        <ul>
+                            <li>Import field data from CSV or Excel formats</li>
+                            <li>Calculate forest metrics (basal area, volume, biomass)</li>
+                            <li>Generate species composition charts</li>
+                            <li>Create spatial visualizations of forest attributes</li>
+                            <li>Export reports in PDF format</li>
+                        </ul>
+                    </div>
+                    <div class="tool-links">
+                        <a href="#" class="btn"><i class="fab fa-github"></i> GitHub Repository</a>
+                        <a href="#" class="btn"><i class="fas fa-download"></i> Download</a>
+                        <a href="#" class="btn"><i class="fas fa-book"></i> User Manual</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Google Earth Engine Tool -->
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="tool-content">
+                    <h3>Google Earth Engine Drought Monitoring Tool</h3>
+                    <div class="tool-tags">
+                        <span class="tag">Google Earth Engine</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Climate</span>
+                    </div>
+                    <p>An Earth Engine application for monitoring drought conditions and their impact on forest health. Integrates multiple satellite-derived drought indices and vegetation health metrics.</p>
+                    <div class="tool-features">
+                        <ul>
+                            <li>Time-series analysis of precipitation and drought indices</li>
+                            <li>Vegetation response to drought events</li>
+                            <li>Customizable study area and time period</li>
+                            <li>Interactive visualization of drought severity</li>
+                            <li>Data export capabilities</li>
+                        </ul>
+                    </div>
+                    <div class="tool-links">
+                        <a href="#" class="btn"><i class="fas fa-globe"></i> Launch App</a>
+                        <a href="#" class="btn"><i class="fas fa-code"></i> View Code</a>
+                        <a href="#" class="btn"><i class="fas fa-book"></i> User Manual</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tool card animations
+        const toolCards = document.querySelectorAll('.tool-card');
+        
+        toolCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.classList.add('active');
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.classList.remove('active');
+            });
+        });
+        
+        // Code highlighting (you could add a proper syntax highlighter like Prism.js)
+        const codeBlocks = document.querySelectorAll('pre code');
+        codeBlocks.forEach(block => {
+            // Simple function to highlight Python keywords
+            const pythonKeywords = ['import', 'from', 'def', 'if', 'else', 'elif', 'for', 'while', 
+                                  'in', 'not', 'and', 'or', 'return', 'True', 'False', 'None', 
+                                  'class', 'with', 'as', 'try', 'except', 'finally'];
+            
+            let content = block.innerHTML;
+            pythonKeywords.forEach(keyword => {
+                const regex = new RegExp('\\b' + keyword + '\\b', 'g');
+                content = content.replace(regex, `<span class="keyword">${keyword}</span>`);
+            });
+            
+            // Highlight strings
+            content = content.replace(/(["'])(?:(?=(\\?))\2.)*?\1/g, '<span class="string">$&</span>');
+            
+            // Highlight comments
+            content = content.replace(/(#.*)$/gm, '<span class="comment">$1</span>');
+            
+            block.innerHTML = content;
+        });
+    });
+</script>
+{% endblock %}
