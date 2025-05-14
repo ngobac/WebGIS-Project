@@ -68,21 +68,21 @@
                             <i class="fas fa-envelope"></i>
                             <div class="contact-detail">
                                 <h3>Email</h3>
-                                <p><a href="mailto:youremail@example.com">youremail@example.com</a></p>
+                                <p><a href="mailto:youremail@example.com">bacngo7877@gmail.com</a></p>
                             </div>
                         </li>
                         <li>
                             <i class="fab fa-linkedin"></i>
                             <div class="contact-detail">
                                 <h3>LinkedIn</h3>
-                                <p><a href="https://linkedin.com/in/yourprofile" target="_blank">linkedin.com/in/yourprofile</a></p>
+                                <p><a href="https://linkedin.com/in/yourprofile" target="_blank">https://www.linkedin.com/in/bacngo7877/</a></p>
                             </div>
                         </li>
                         <li>
                             <i class="fab fa-github"></i>
                             <div class="contact-detail">
                                 <h3>GitHub</h3>
-                                <p><a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a></p>
+                                <p><a href="https://github.com/yourusername" target="_blank">https://github.com/ngobac</a></p>
                             </div>
                         </li>
                         <li>
@@ -148,14 +148,14 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize the map
         if (document.getElementById('contact-map')) {
-            const map = L.map('contact-map').setView([51.505, -0.09], 13); // Set default coordinates
+            const map = L.map('contact-map').setView([10.94, 107.19], 13); // Set default coordinates
             
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
             
             // Add a marker
-            L.marker([51.505, -0.09]).addTo(map)
+            L.marker([10.94, 107.19]).addTo(map)
                 .bindPopup('My Location')
                 .openPopup();
         }
